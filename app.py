@@ -295,13 +295,21 @@ def priority_style(val):
 
 styled = (
     table_df.style
-    .applymap(priority_style, subset=["Priority"])
+    .map(priority_style, subset=["Priority"])   # ✅ FIXED
     .background_gradient(subset=["Urgency"], cmap="Reds")
-    .format({"Alloc ICU": "{:.0f}", "Alloc Doctors": "{:.0f}", "Alloc O₂": "{:.0f}"})
-    .set_properties(**{"background-color": "#0d1526", "color": "#cbd5e1", "border": "1px solid #1e3a5f"})
+    .format({
+        "Alloc ICU": "{:.0f}",
+        "Alloc Doctors": "{:.0f}",
+        "Alloc O₂": "{:.0f}"
+    })
+    .set_properties(**{
+        "background-color": "#0d1526",
+        "color": "#cbd5e1",
+        "border": "1px solid #1e3a5f"
+    })
 )
-st.dataframe(styled, use_container_width=True, height=340)
 
+st.dataframe(styled, use_container_width=True, height=340)
 
 # ── Row 4: XAI Section ────────────────────────────────────────────────────────
 st.markdown('<div class="section-header">🧠 Explainable AI — Priority Justification</div>',
