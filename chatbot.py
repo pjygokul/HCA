@@ -1,14 +1,17 @@
 import pandas as pd
 import json
 import os
+import streamlit as st
 from dotenv import load_dotenv
 from groq import Groq
 
-# Load environment variables
+# Load .env for local development
 load_dotenv()
 
-# Initialize API client if key exists
-api_key = os.getenv("GROQ_API_KEY")
+# Try Streamlit secrets first, fallback to .env
+api_key = st.secrets.get("GROQ_API_KEY") or os.getenv("GROQ_API_KEY")
+
+# Initialize client
 client = Groq(api_key=api_key) if api_key else None
 
 def process_chat_query(query: str, alloc_df: pd.DataFrame) -> dict:
