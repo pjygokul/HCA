@@ -9,7 +9,10 @@ from groq import Groq
 load_dotenv()
 
 # Try Streamlit secrets first, fallback to .env
-api_key = st.secrets.get("GROQ_API_KEY") or os.getenv("GROQ_API_KEY")
+try:
+    api_key = st.secrets.get("GROQ_API_KEY") or os.getenv("GROQ_API_KEY")
+except Exception:
+    api_key = os.getenv("GROQ_API_KEY")
 
 # Initialize client
 client = Groq(api_key=api_key) if api_key else None
